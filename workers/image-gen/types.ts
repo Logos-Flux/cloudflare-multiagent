@@ -4,12 +4,15 @@
 
 export interface GenerateRequest {
   prompt: string;
-  model?: string;
+  model?: string; // Legacy: will be treated as model_id
+  model_id?: string; // Preferred: explicit model config ID
   instance_id?: string;
   project_id?: string;
   options?: {
     aspect_ratio?: string;
     style?: string;
+    quality?: string;
+    num_images?: number;
     [key: string]: any;
   };
 }
@@ -47,6 +50,13 @@ export interface Env {
   CDN_URL?: string;
   DEFAULT_INSTANCE_ID?: string;
   DEFAULT_PROVIDER?: string;
+  DEFAULT_MODEL_ID?: string;
+  CONFIG_SERVICE_URL?: string;
+
+  // Legacy API keys (fallback when config service unavailable)
+  IDEOGRAM_API_KEY?: string;
+  GEMINI_API_KEY?: string;
+  OPENAI_API_KEY?: string;
 }
 
 export interface InstanceConfig {

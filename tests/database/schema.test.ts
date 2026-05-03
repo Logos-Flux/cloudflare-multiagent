@@ -270,7 +270,7 @@ describe('Database Schema Tests', () => {
       // );
       //
       // expect(project).not.toBeNull();
-      // expect(project?.name).toBe('Content Forge');
+      // expect(project?.name).toBe('Demo Project');
       // expect(project?.settings.default_provider).toBe('openai');
 
       expect(true).toBe(true); // Placeholder

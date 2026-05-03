@@ -1,7 +1,7 @@
 # Root Cloudflare Workers Configuration
 # This is a base configuration - individual workers have their own wrangler.toml files
 
-name = "cloudflare-multiagent-system"
+name = "cloudflare-multiagent"
 compatibility_date = "2024-11-20"
 compatibility_flags = ["nodejs_compat"]
 

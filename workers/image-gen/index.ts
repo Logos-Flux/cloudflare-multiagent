@@ -3,14 +3,15 @@
  * Main worker that orchestrates image generation workflow
  */
 
-import { providerRegistry } from '../shared/provider-adapters';
+import { providerRegistry, DynamicAdapter } from '../shared/provider-adapters';
+import type { DynamicAdapterConfig } from '../shared/provider-adapters';
 import { checkAndRecordRequest } from '../shared/rate-limiter';
 import {
   uploadImage,
   generateMetadata as createImageMetadata,
   serializeMetadata,
 } from '../shared/r2-manager';
-import { applyPayloadMapping, applyResponseMapping } from '../shared/utils/payload-mapper';
+import { applyPayloadMapping } from '../shared/utils/payload-mapper';
 import type {
   Env,
   GenerateRequest,
@@ -154,21 +155,32 @@ async function handleGenerate(
       );
     }
 
-    // Step 2: Determine model and fetch configuration
-    const modelId = body.model || getDefaultModelId(env);
+    // Step 2: Determine model_id and fetch configuration
+    // Support both 'model' and 'model_id' parameters for backwards compatibility
+    const modelId = body.model_id || body.model || getDefaultModelId(env);
     const modelConfig = await getModelConfig(modelId, env);
 
     // Fallback to legacy provider-based approach if model config not found
     let provider: string;
     let useModelConfig = false;
+    let adapter: any;
 
     if (modelConfig) {
       provider = modelConfig.provider_id;
       useModelConfig = true;
       console.log(`Using model config for ${modelId} (provider: ${provider})`);
+
+      // Create dynamic adapter with model config
+      const adapterConfig: DynamicAdapterConfig = {
+        provider_id: modelConfig.provider_id,
+        model_id: modelConfig.model_id,
+        payload_mapping: modelConfig.payload_mapping,
+      };
+      adapter = new DynamicAdapter(adapterConfig);
     } else {
       provider = env.DEFAULT_PROVIDER || 'ideogram';
       console.warn(`Model config not found for ${modelId}, falling back to legacy mode with provider: ${provider}`);
+      adapter = providerRegistry.getAdapter(provider);
     }
 
     // Step 3: Check rate limits
@@ -206,16 +218,13 @@ async function handleGenerate(
       );
     }
 
-    // Step 5: Get provider adapter
-    const adapter = providerRegistry.getAdapter(provider);
-
-    // Step 6: Format request for provider
+    // Step 5: Format request for provider
     let providerRequest: any;
 
     if (useModelConfig && modelConfig) {
       // Use model config payload mapping
       console.log('Applying payload mapping from model config');
-      providerRequest = applyPayloadMapping(
+      const mappedRequest = applyPayloadMapping(
         modelConfig.payload_mapping,
         {
           user_prompt: body.prompt,
@@ -227,12 +236,19 @@ async function handleGenerate(
         },
         apiKey
       );
+
+      // Wrap in ProviderRequest format for DynamicAdapter
+      providerRequest = {
+        provider: provider,
+        payload: mappedRequest,
+      };
     } else {
       // Legacy: use adapter formatRequest
       console.log('Using legacy adapter formatRequest');
       providerRequest = adapter.formatRequest(body.prompt, body.options || {});
     }
 
+    // Step 6: Submit job to provider
     const jobId = await adapter.submitJob(providerRequest, apiKey);
 
     // Step 8: Poll until complete (with timeout)
@@ -334,9 +350,11 @@ async function handleGenerate(
  * Fetch model configuration from config service
  */
 async function getModelConfig(modelId: string, env: Env): Promise<any> {
-  const configServiceUrl = env.CONFIG_SERVICE_URL || 'https://config-service.your-domain.com';
+  const configServiceUrl = env.CONFIG_SERVICE_URL || 'https://api.example.com';
 
   try {
+    console.log(`Fetching model config for ${modelId} from ${configServiceUrl}`);
+
     const response = await fetch(`${configServiceUrl}/model-config/${modelId}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -344,11 +362,18 @@ async function getModelConfig(modelId: string, env: Env): Promise<any> {
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch model config for ${modelId}:`, response.statusText);
+      if (response.status === 404) {
+        console.log(`Model config not found for ${modelId} - will use legacy mode`);
+      } else {
+        console.error(`Failed to fetch model config for ${modelId}:`, response.status, response.statusText);
+      }
       return null;
     }
 
     const result = await response.json();
+    console.log(`Successfully fetched model config for ${modelId}`);
+
+    // The config service returns data in a wrapper object
     return result.data || result;
   } catch (error) {
     console.error(`Error fetching model config for ${modelId}:`, error);

@@ -12,11 +12,6 @@ binding = "DB"
 database_name = "multiagent_system"
 database_id = "7cff30a0-c974-4ede-b96a-c91dd2f0c870"
 
-# KV namespace for encrypted provider API keys
-[[kv_namespaces]]
-binding = "PROVIDER_KEYS"
-id = "60eab140779649c09cb9aea7b3c8f533"
-
 # Environment variables
 [env.production]
 name = "config-service-production"
@@ -48,5 +43,5 @@ database_id = ""  # Development database ID
 
 # Routes configuration
 routes = [
-  { pattern = "api.your-domain.com/*", zone_name = "your-domain.com" }
+  { pattern = "api.example.com/*", zone_id = "YOUR_ZONE_ID" }
 ]

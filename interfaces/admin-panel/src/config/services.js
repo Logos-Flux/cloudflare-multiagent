@@ -168,6 +168,63 @@ export const services = [
     }
   },
   {
+    id: 'text-gen',
+    name: 'Text Generation Worker',
+    description: 'AI-powered text generation using multiple providers (OpenAI, Anthropic, etc.)',
+    status: 'active',
+    icon: '📝',
+    endpoints: [
+      {
+        method: 'POST',
+        path: '/generate',
+        description: 'Generate text from a prompt'
+      },
+      {
+        method: 'GET',
+        path: '/health',
+        description: 'Health check endpoint'
+      }
+    ],
+    links: [
+      {
+        name: 'Text Testing GUI',
+        url: 'https://text-testing.example.com',
+        description: 'Interactive web interface for testing text generation'
+      },
+      {
+        name: 'API Documentation',
+        url: '/docs/api/text-generation',
+        description: 'Complete API reference and examples'
+      }
+    ],
+    usage: {
+      title: 'Quick Start',
+      steps: [
+        'Get your API key from the Users page',
+        'Open the Text Testing GUI or use curl/Postman',
+        'Select your instance ID and model (GPT-4o, Claude, etc.)',
+        'Enter a text prompt (e.g., "Write a short story about...")',
+        'Click Generate and receive your text response',
+        'Supports OpenAI and Anthropic models'
+      ]
+    },
+    example: {
+      title: 'Example Request',
+      code: `curl -X POST https://text.example.com/generate \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "prompt": "Write a haiku about clouds",
+    "model": "gpt-4o-mini",
+    "instance_id": "production",
+    "options": {
+      "max_tokens": 1000,
+      "temperature": 0.7
+    }
+  }'`
+    }
+  },
+  {
     id: 'rate-limiter',
     name: 'Rate Limiter',
     description: 'Durable Object-based rate limiting per instance and provider',

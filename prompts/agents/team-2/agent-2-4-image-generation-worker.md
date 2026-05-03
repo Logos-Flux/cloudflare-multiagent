@@ -53,7 +53,7 @@ RESPONSE:
 {
   "success": true,
   "image_url": "https://cdn.../image.png",
-  "r2_path": "production/content-forge/12345_image.png",
+  "r2_path": "production/demo-project/12345_image.png",
   "metadata": {
     "provider": "ideogram",
     "model": "ideogram-v2",

@@ -1,7 +1,7 @@
 {
-  "name": "cloudflare-multiagent-system",
-  "version": "1.0.0",
-  "description": "Multi-agent Cloudflare Workers system with hierarchical instance management",
+  "name": "cloudflare-multiagent",
+  "version": "0.1.0",
+  "description": "Cloudflare Multi-Agent - Multi-agent AI platform built on Cloudflare Workers",
   "main": "index.js",
   "type": "module",
   "scripts": {

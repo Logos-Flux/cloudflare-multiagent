@@ -5,6 +5,8 @@
 
 export { ProviderAdapter } from './base-adapter';
 export { IdeogramAdapter } from './ideogram-adapter';
+export { DynamicAdapter } from './dynamic-adapter';
+export type { DynamicAdapterConfig } from './dynamic-adapter';
 export { providerRegistry, ProviderRegistry } from './registry';
 export type {
   ImageGenerationOptions,

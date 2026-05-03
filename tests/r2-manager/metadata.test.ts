@@ -35,10 +35,10 @@ describe('R2 Metadata', () => {
         'ideogram',
         'v2',
         'Test prompt',
-        'content-forge'
+        'demo-project'
       );
 
-      expect(metadata.project_id).toBe('content-forge');
+      expect(metadata.project_id).toBe('demo-project');
     });
 
     it('should merge additional metadata', () => {
@@ -108,7 +108,7 @@ describe('R2 Metadata', () => {
     it('should parse valid metadata', () => {
       const customMetadata = {
         instance_id: 'production',
-        project_id: 'content-forge',
+        project_id: 'demo-project',
         provider: 'ideogram',
         model: 'v2',
         prompt: 'Test prompt',

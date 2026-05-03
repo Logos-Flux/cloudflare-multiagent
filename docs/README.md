@@ -93,7 +93,7 @@ graph LR
     end
 
     subgraph "Production Projects"
-        P1[Content Forge]
+        P1[Demo Project]
         P2[Solar Proposals]
         P3[Website Chat]
     end
@@ -158,8 +158,8 @@ sequenceDiagram
 
 ```bash
 # Clone repository
-git clone https://github.com/YourOrg/cloudflare-multiagent-system.git
-cd cloudflare-multiagent-system
+git clone https://github.com/YourOrg/cloudflare-multiagent.git
+cd cloudflare-multiagent
 
 # Install dependencies
 npm install
@@ -217,8 +217,8 @@ API contract specifications for all services.
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/YourOrg/cloudflare-multiagent-system/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/YourOrg/cloudflare-multiagent-system/discussions)
+- **Issues**: [GitHub Issues](https://github.com/YourOrg/cloudflare-multiagent/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/YourOrg/cloudflare-multiagent/discussions)
 
 ## License
 

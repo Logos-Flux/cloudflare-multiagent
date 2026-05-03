@@ -1,0 +1,51 @@
+name: Sync Service Registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'services-manifest.json'
+      - 'workers/**'
+  workflow_dispatch:
+
+jobs:
+  sync-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read Services Manifest
+        id: manifest
+        run: |
+          if [ -f services-manifest.json ]; then
+            SERVICES=$(cat services-manifest.json | jq -c '.services')
+            echo "services=$SERVICES" >> $GITHUB_OUTPUT
+            echo "has_manifest=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_manifest=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Sync to Developer Guides MCP
+        if: steps.manifest.outputs.has_manifest == 'true'
+        env:
+          WEBHOOK_URL: ${{ secrets.DEVELOPER_GUIDES_WEBHOOK_URL }}
+          SYNC_TOKEN: ${{ secrets.REGISTRY_SYNC_TOKEN }}
+          SERVICES_JSON: ${{ steps.manifest.outputs.services }}
+        run: |
+          # Build JSON payload using jq to ensure proper escaping
+          PAYLOAD=$(jq -n \
+            --arg source "github-action" \
+            --arg commit "${{ github.sha }}" \
+            --argjson services "$SERVICES_JSON" \
+            '{source: $source, commit: $commit, services: $services}')
+
+          curl -X POST "${WEBHOOK_URL}/api/sync-registry" \
+            -H "Authorization: Bearer ${SYNC_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD"
+
+      - name: Report Result
+        if: always()
+        run: |
+          echo "Registry sync completed for commit ${{ github.sha }}"

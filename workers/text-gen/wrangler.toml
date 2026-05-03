@@ -8,27 +8,23 @@ compatibility_flags = ["nodejs_compat"]
 # Worker settings
 workers_dev = true
 
-# KV namespace for encrypted provider API keys
-[[kv_namespaces]]
-binding = "PROVIDER_KEYS"
-id = "60eab140779649c09cb9aea7b3c8f533"
-
-# D1 Database for auth lookups
-[[d1_databases]]
-binding = "DB"
-database_name = "multiagent_system"
-database_id = "7cff30a0-c974-4ede-b96a-c91dd2f0c870"
+# Rate Limiter Durable Object
+[[durable_objects.bindings]]
+name = "RATE_LIMITER"
+class_name = "RateLimiter"
+script_name = "rate-limiter"
 
 # Environment Variables
 [vars]
-CONFIG_SERVICE_URL = "https://config-service.your-subdomain.workers.dev"
 DEFAULT_PROVIDER = "openai"
-DEFAULT_MODEL_ID = "gpt-4o-mini"
+CONFIG_SERVICE_URL = "https://api.example.com"
 
 # Secrets (set with: wrangler secret put <NAME>)
-# - ENCRYPTION_KEY (for decrypting provider API keys from KV)
+# - OPENAI_API_KEY
+# - ANTHROPIC_API_KEY
+# - etc.
 
 # Custom routes
 routes = [
-  { pattern = "text-testing.your-domain.com/*", zone_name = "your-domain.com" }
+  { pattern = "text.example.com/*", zone_id = "YOUR_ZONE_ID" }
 ]

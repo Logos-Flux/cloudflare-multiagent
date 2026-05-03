@@ -84,9 +84,9 @@ describe('R2 Storage Manager', () => {
 
   describe('generatePath', () => {
     it('should generate path with project ID', () => {
-      const path = generatePath('production', 'content-forge', 'image.png');
+      const path = generatePath('production', 'demo-project', 'image.png');
 
-      expect(path).toMatch(/^production\/content-forge\/\d+_image\.png$/);
+      expect(path).toMatch(/^production\/demo-project\/\d+_image\.png$/);
     });
 
     it('should generate path without project ID', () => {
@@ -165,7 +165,7 @@ describe('R2 Storage Manager', () => {
       const imageData = new ArrayBuffer(1024);
       const options: StorageOptions = {
         instanceId: 'production',
-        projectId: 'content-forge',
+        projectId: 'demo-project',
         filename: 'test.png',
         metadata: {
           provider: 'ideogram',
@@ -175,7 +175,7 @@ describe('R2 Storage Manager', () => {
 
       const result = await uploadImage(imageData, options, env);
 
-      expect(result.r2_path).toMatch(/^production\/content-forge\/\d+_test\.png$/);
+      expect(result.r2_path).toMatch(/^production\/demo-project\/\d+_test\.png$/);
       expect(result.cdn_url).toContain('https://cdn.example.com/');
       expect(result.bucket).toBe('test-bucket');
       expect(result.size_bytes).toBe(1024);

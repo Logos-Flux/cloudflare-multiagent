@@ -102,7 +102,7 @@ INSERT INTO projects (project_id, instance_id, name, settings, created_at) VALUE
 (
     'proj_750e8400-e29b-41d4-a716-446655440001',
     'inst_550e8400-e29b-41d4-a716-446655440001',
-    'Content Forge',
+    'Demo Project',
     json('{
         "description": "AI-powered content generation system",
         "default_provider": "openai",
@@ -186,7 +186,7 @@ INSERT INTO usage_logs (log_id, instance_id, timestamp, provider, tokens_used, c
 -- Instances: 2 (production, development)
 -- Users: 2 (admin, developer)
 -- User Access: Admin has access to both instances, developer only to dev
--- Projects: 2 (Content Forge in prod, Image Generator Dev in dev)
--- API Keys: 2 (one for admin user, one for Content Forge project)
+-- Projects: 2 (Demo Project in prod, Image Generator Dev in dev)
+-- API Keys: 2 (one for admin user, one for Demo Project project)
 -- Usage Logs: 3 sample log entries
 -- ============================================================================

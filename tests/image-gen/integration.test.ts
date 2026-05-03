@@ -83,7 +83,7 @@ describe('Image Generation E2E Flow', () => {
     // In a real test, we would verify:
     const expectedMetadata = {
       instance_id: 'production',
-      project_id: 'content-forge',
+      project_id: 'demo-project',
       provider: 'ideogram',
       model: 'ideogram-v2',
       prompt: 'A beautiful sunset...',
@@ -95,9 +95,9 @@ describe('Image Generation E2E Flow', () => {
 
   it('should generate correct R2 path format', () => {
     // Expected path format: {instance_id}/{project_id}/{timestamp}_{filename}
-    const expectedPathPattern = /^production\/content-forge\/\d+_.*\.png$/;
+    const expectedPathPattern = /^production\/demo-project\/\d+_.*\.png$/;
 
-    const examplePath = 'production/content-forge/1234567890_test.png';
+    const examplePath = 'production/demo-project/1234567890_test.png';
     expect(examplePath).toMatch(expectedPathPattern);
   });
 

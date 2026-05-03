@@ -14,8 +14,8 @@ Complete guide to deploying and managing the Cloudflare Multi-Agent System.
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/YourOrg/cloudflare-multiagent-system.git
-cd cloudflare-multiagent-system
+git clone https://github.com/YourOrg/cloudflare-multiagent.git
+cd cloudflare-multiagent
 ```
 
 ### 2. Install Dependencies

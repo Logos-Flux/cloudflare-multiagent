@@ -1,7 +1,7 @@
 # Custom Domain Configuration Guide
 ## Domain: your-domain.com
 
-This guide will help you configure custom domains for all services in the Cloudflare Multi-Agent System.
+This guide will help you configure custom domains for all services in Cloudflare Multi-Agent.
 
 ## Prerequisites
 

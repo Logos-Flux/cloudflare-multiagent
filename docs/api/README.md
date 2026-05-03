@@ -202,7 +202,7 @@ curl -X POST https://image-gen-production.workers.dev/generate \
     "prompt": "A serene mountain landscape at sunset",
     "model": "ideogram-v2",
     "instance_id": "production",
-    "project_id": "content-forge",
+    "project_id": "demo-project",
     "options": {
       "aspect_ratio": "16:9",
       "style": "realistic"
@@ -221,8 +221,8 @@ curl -X POST https://image-gen-production.workers.dev/generate \
 ```json
 {
   "success": true,
-  "image_url": "https://cdn.example.com/production/content-forge/12345_image.png",
-  "r2_path": "production/content-forge/12345_image.png",
+  "image_url": "https://cdn.example.com/production/demo-project/12345_image.png",
+  "r2_path": "production/demo-project/12345_image.png",
   "metadata": {
     "provider": "ideogram",
     "model": "ideogram-v2",

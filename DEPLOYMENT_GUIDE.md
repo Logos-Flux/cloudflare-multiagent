@@ -78,8 +78,8 @@ wrangler whoami
 
 ```bash
 # 1. Clone and enter repository
-git clone <your-repository-url>
-cd cloudflare-multiagent-system
+git clone https://github.com/Logos-Flux/cloudflare-multiagent.git
+cd cloudflare-multiagent
 
 # 2. Install dependencies
 npm install
@@ -1086,7 +1086,7 @@ wrangler secret --help       # Secrets management
 - Ideogram Support: support@ideogram.ai
 
 **For This System**:
-- GitHub Issues: <your-repository-issues-url>
+- GitHub Issues: https://github.com/Logos-Flux/cloudflare-multiagent/issues
 - Project Documentation: `/docs/README.md`
 
 ---

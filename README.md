@@ -1,120 +1,46 @@
-    ██╗      ██████╗  ██████╗  ██████╗ ███████╗
-    ██║     ██╔═══██╗██╔════╝ ██╔═══██╗██╔════╝
-    ██║     ██║   ██║██║  ███╗██║   ██║███████╗
-    ██║     ██║   ██║██║   ██║██║   ██║╚════██║
-    ███████╗╚██████╔╝╚██████╔╝╚██████╔╝███████║
-    ╚══════╝ ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝
+# Cloudflare Multi-Agent
 
-            ███████╗██╗     ██╗   ██╗██╗  ██╗
-            ██╔════╝██║     ██║   ██║╚██╗██╔╝
-            █████╗  ██║     ██║   ██║ ╚███╔╝ 
-            ██╔══╝  ██║     ██║   ██║ ██╔██╗ 
-            ██║     ███████╗╚██████╔╝██╔╝ ██╗
-            ╚═╝     ╚══════╝ ╚═════╝ ╚═╝  ╚═╝
-            
-# Cloudflare Multi-Agent System
-
-> **Status**: 🚀 MVP Development - Multi-Agent Autonomous Build
-> **Timeline**: 4-6 hours automated deployment
-> **Budget**: $1000 Claude Code credits
+> **Status**: `v0.1.0` public preview — see [`KNOWN_ISSUES.md`](./KNOWN_ISSUES.md) for the path to v1.0.0.
 
 ## Overview
 
-Migration of 120-agent Content Forge system to Cloudflare Workers infrastructure, creating a generic, flexible, and portable multi-agent platform that can be consumed by any authenticated application.
+Cloudflare Multi-Agent is a production-ready multi-agent AI platform built on Cloudflare Workers infrastructure. It provides a generic, flexible, and portable platform for AI-powered services that can be consumed by any authenticated application.
 
 ### Key Features
 
 - **Hierarchical Instance Management**: Organization → Instance → Project
 - **Provider-Agnostic**: Extensible framework for multiple AI providers
-- **Dynamic Model Configuration**: Admin-managed AI models without code changes
-- **Unified Payload Mapping**: Single interface across all providers and models
-- **Autonomous Development**: 4 Team Leaders managing 16 agents building in parallel
 - **Production-Ready**: Rate limiting, error handling, monitoring, CI/CD
 
 ## Architecture
 
 ```
-Organization (e.g., Acme Corp.)
+Organization (e.g., Acme Corp)
   └── Instance (like a VM - "production", "staging")
       ├── API Keys (shared across projects)
       ├── Rate Limits (shared pool)
       ├── Workers (dedicated deployments)
+      │   ├── Image Generation (Ideogram)
+      │   └── Text Generation (OpenAI, Anthropic)
       └── Projects (logical groupings)
 ```
-
-## Model Configuration System
-
-The Model Configuration System enables flexible, admin-managed AI model configurations without requiring code changes.
-
-### Features
-
-- **Centralized Management**: All model configs stored in D1 database
-- **Admin UI**: Manage models through Admin Panel's Models page
-- **Provider Agnostic**: Support any AI provider (OpenAI, Ideogram, Gemini, etc.)
-- **Dynamic Payload Mapping**: Template-based transformation of inputs to provider formats
-- **Capability Tracking**: Mark models for image, video, text, audio generation
-- **Pricing & Rate Limits**: Built-in metadata for billing and throttling
-- **Lifecycle Management**: Active, Beta, Deprecated status tracking
-
-### How It Works
-
-1. **Admin Configuration**: Create model config in Admin Panel
-   ```json
-   {
-     "model_id": "ideogram-v2",
-     "provider_id": "ideogram",
-     "capabilities": {"image": true},
-     "payload_mapping": {
-       "endpoint": "/generate",
-       "headers": {"Api-Key": "{api_key}"},
-       "body": {"prompt": "{user_prompt}"}
-     }
-   }
-   ```
-
-2. **User Selection**: User selects model in Testing GUI dropdown
-
-3. **Dynamic Mapping**: Worker fetches config and transforms request
-   ```typescript
-   const config = await getModelConfig(modelId);
-   const request = applyPayloadMapping(config.payload_mapping, userInputs, apiKey);
-   ```
-
-4. **Provider Execution**: Formatted request sent to provider API
-
-### Supported Providers
-
-- **Ideogram**: V2, V2 Turbo
-- **OpenAI**: DALL-E 3, DALL-E 2
-- **Gemini**: Veo 3.1 (video), 2.5 Flash Image, Imagen 3
-- **Anthropic**: Claude 3.5 Sonnet (text)
-- **Extensible**: Add new providers via Admin Panel
-
-### Documentation
-
-- [Admin Guide](./docs/MODEL_CONFIG_ADMIN_GUIDE.md) - How to add/edit model configs
-- [User Guide](./docs/MODEL_CONFIG_USER_GUIDE.md) - How to use models in Testing GUI
-- [API Documentation](./docs/MODEL_CONFIG_API.md) - Programmatic access
-- [Payload Mapping Spec](./docs/PAYLOAD_MAPPING_SPEC.md) - Template syntax details
-- [Database Schema](./docs/MODEL_CONFIG_SCHEMA.md) - Schema documentation
 
 ## MVP Scope
 
 ### In Scope
 - Config Service (D1 database + worker)
-- Model Configuration System (admin-managed models)
 - Image Generation Worker (Ideogram provider)
+- **Text Generation Worker (OpenAI, Anthropic)** ✅
 - Rate Limiting (Durable Objects)
 - R2 Storage Integration
 - Authentication & Authorization
 - Deployment Automation (GitHub Actions)
-- Testing GUI & Admin Interface
+- Testing GUIs & Admin Interface
 
 ### Out of Scope (Future)
+- Video generation
 - Advanced billing/usage tiers
 - Multi-tenancy (single org for MVP)
-- Real-time streaming generation
-- Image editing/inpainting
 
 ## Multi-Agent Development Structure
 
@@ -154,8 +80,8 @@ Project Manager (Human)
 
 ```bash
 # Clone repository
-git clone <your-repository-url>
-cd cloudflare-multiagent-system
+git clone https://github.com/Logos-Flux/cloudflare-multiagent.git
+cd cloudflare-multiagent
 
 # Install dependencies
 npm install
@@ -186,9 +112,11 @@ npm run deploy-instance -- --config instances/production.json
 │   │   ├── r2-manager/
 │   │   ├── error-handling/
 │   │   └── logging/
-│   └── image-gen/          # Image generation worker
+│   ├── image-gen/          # Image generation worker
+│   └── text-gen/           # Text generation worker
 ├── interfaces/              # User-facing interfaces
-│   ├── testing-gui/        # Testing interface
+│   ├── testing-gui/        # Image generation testing
+│   ├── text-testing-gui/   # Text generation testing
 │   ├── admin-panel/        # Instance management
 │   └── monitoring/         # Dashboard
 ├── scripts/                 # Deployment automation
@@ -246,15 +174,15 @@ git log --all --grep="ESCALATION"
 ## Success Criteria
 
 - ✅ Config Service deployed and responding
-- ✅ Model Configuration System operational
-- ✅ Image Gen Worker functional with multiple providers
-- ✅ Dynamic payload mapping working
+- ✅ Image Gen Worker functional with Ideogram
+- ✅ **Text Gen Worker functional with OpenAI & Anthropic**
 - ✅ Rate limiting operational
-- ✅ Testing GUI accessible with model selection
-- ✅ Admin panel functional with Models page
+- ✅ Testing GUIs accessible (image + text)
+- ✅ Admin panel functional with Deployments tracking
 - ✅ 2 instances deployed (production + development)
 - ✅ All tests passing
 - ✅ CI/CD pipeline working
+- ✅ Custom domains configured (example.com)
 
 ## License
 

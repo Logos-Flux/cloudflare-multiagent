@@ -155,7 +155,7 @@ export default function Services() {
             View Documentation
           </a>
           <a
-            href="<your-repository-url>"
+            href="https://github.com/Logos-Flux/cloudflare-multiagent"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-4 py-2 bg-white hover:bg-gray-50 text-blue-600 border border-blue-600 rounded-md text-sm font-medium transition"

@@ -1,0 +1,124 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-12-04T00:00:00Z",
+  "services": [
+    {
+      "id": "text-gen",
+      "name": "Text Generation",
+      "description": "LLM text generation via OpenAI/Anthropic/Gemini providers",
+      "category": "llm",
+      "status": "active",
+      "worker": "text-gen",
+      "capabilities": [
+        {
+          "capability": "chat_completion",
+          "description": "Generate chat responses with conversation history"
+        },
+        {
+          "capability": "text_completion",
+          "description": "Generate text completions from a prompt"
+        },
+        {
+          "capability": "streaming_chat",
+          "description": "Stream chat responses in real-time"
+        }
+      ],
+      "providers": ["openai", "anthropic", "gemini"]
+    },
+    {
+      "id": "image-gen",
+      "name": "Image Generation",
+      "description": "Image generation via Ideogram API",
+      "category": "image",
+      "status": "active",
+      "worker": "image-gen",
+      "capabilities": [
+        {
+          "capability": "generate_image",
+          "description": "Generate images from text prompts"
+        },
+        {
+          "capability": "remix_image",
+          "description": "Generate variations of an existing image"
+        }
+      ],
+      "providers": ["ideogram"]
+    },
+    {
+      "id": "config-service",
+      "name": "Config Service",
+      "description": "Central configuration management for the worker swarm",
+      "category": "utility",
+      "status": "active",
+      "worker": "config-service",
+      "capabilities": [
+        {
+          "capability": "get_config",
+          "description": "Retrieve configuration values by key"
+        },
+        {
+          "capability": "set_config",
+          "description": "Update configuration values"
+        },
+        {
+          "capability": "list_configs",
+          "description": "List all configuration keys for an instance"
+        }
+      ],
+      "providers": []
+    },
+    {
+      "id": "voice-to-text",
+      "name": "Voice to Text",
+      "description": "Speech transcription service",
+      "category": "voice",
+      "status": "planned",
+      "worker": "voice-to-text",
+      "capabilities": [],
+      "providers": []
+    },
+    {
+      "id": "text-to-voice",
+      "name": "Text to Voice",
+      "description": "Text-to-speech synthesis",
+      "category": "voice",
+      "status": "planned",
+      "worker": "text-to-voice",
+      "capabilities": [],
+      "providers": []
+    },
+    {
+      "id": "mnemo",
+      "name": "Mnemo Working Memory",
+      "description": "Real-time context curation and conversation history",
+      "category": "memory",
+      "status": "beta",
+      "worker": "mnemo",
+      "capabilities": [
+        {
+          "capability": "store_context",
+          "description": "Store conversation context for later retrieval"
+        },
+        {
+          "capability": "retrieve_context",
+          "description": "Retrieve relevant context based on current conversation"
+        },
+        {
+          "capability": "preemptive_load",
+          "description": "Proactively load context based on conversation topics"
+        }
+      ],
+      "providers": ["gemini"]
+    },
+    {
+      "id": "nexus",
+      "name": "Nexus Long-term Memory",
+      "description": "Strategic memory and decision pattern storage",
+      "category": "memory",
+      "status": "planned",
+      "worker": "nexus",
+      "capabilities": [],
+      "providers": []
+    }
+  ]
+}

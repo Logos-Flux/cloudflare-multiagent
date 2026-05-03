@@ -25,7 +25,7 @@ INSERT INTO model_configs (
   '{"image": true, "video": false, "text": false, "inpainting": false}',
   '{"cost_per_image": 0.08, "currency": "USD", "billing_unit": "image"}',
   '{"rpm": 100, "tpm": 50000, "concurrent_requests": 10}',
-  '{"endpoint": "/generate", "method": "POST", "headers": {"Api-Key": "{api_key}", "Content-Type": "application/json"}, "body": {"image_request": {"model": "V_2", "prompt": "{user_prompt}", "aspect_ratio": "{aspect_ratio}", "magic_prompt_option": "AUTO"}}, "response_mapping": {"job_id": "$.data.id", "status": "$.data.status", "image_url": "$.data.url"}, "defaults": {"aspect_ratio": "1:1"}}',
+  '{"endpoint": "https://api.ideogram.ai/generate", "method": "POST", "headers": {"Api-Key": "{api_key}", "Content-Type": "application/json"}, "body": {"image_request": {"model": "V_2", "prompt": "{user_prompt}", "aspect_ratio": "{aspect_ratio}", "magic_prompt_option": "AUTO"}}, "response_mapping": {"image_url": "$.data[0].url", "resolution": "$.data[0].resolution"}, "defaults": {"aspect_ratio": "1:1"}}',
   'active',
   CURRENT_TIMESTAMP,
   CURRENT_TIMESTAMP

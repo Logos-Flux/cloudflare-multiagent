@@ -20,7 +20,7 @@ Examples: "production", "development", "staging", "client-xyz"
 ### Project (Lightweight - Just Metadata)
 - Logical grouping within an instance
 - All projects in an instance share that instance's resources
-- Examples: "Content Forge", "Solar Proposals", "Website Chat"
+- Examples: "Demo Project", "Solar Proposals", "Website Chat"
 
 ---
 

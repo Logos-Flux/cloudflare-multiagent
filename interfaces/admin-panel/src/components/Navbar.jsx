@@ -48,6 +48,12 @@ export default function Navbar({ onLogout }) {
                 Models
               </Link>
               <Link
+                to="/deployments"
+                className={`px-3 py-2 rounded-md text-sm font-medium transition ${isActive('/deployments')}`}
+              >
+                Deployments
+              </Link>
+              <Link
                 to="/logs"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition ${isActive('/logs')}`}
               >

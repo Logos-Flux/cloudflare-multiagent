@@ -14,8 +14,8 @@ Guide for local development, testing, and extending the Cloudflare Multi-Agent S
 ### Clone and Install
 
 ```bash
-git clone https://github.com/YourOrg/cloudflare-multiagent-system.git
-cd cloudflare-multiagent-system
+git clone https://github.com/YourOrg/cloudflare-multiagent.git
+cd cloudflare-multiagent
 npm install
 ```
 
@@ -90,7 +90,7 @@ Access at `http://localhost:8080`
 ## Project Structure
 
 ```
-cloudflare-multiagent-system/
+cloudflare-multiagent/
 ├── docs/                       # Documentation
 ├── infrastructure/
 │   ├── database/              # D1 schema and migrations
